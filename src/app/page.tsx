@@ -8,7 +8,7 @@ import TestimonialCard from '@/components/TestimonialCard/TestimonialCard'
 import Navbar from '@/components/Navbar/Navbar'
 import Footer from '@/components/Footer'
 import './home.css'
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef } from 'react'
 
 const popularTrees = [
   {
@@ -52,18 +52,92 @@ const plants = [
   }
 ]
 
+const testimonials = [
+  {
+    quote: "The quality of plants and service exceeded my expectations. My garden has never looked better!",
+    name: "Lily Chen",
+    affiliation: "Urban Gardener",
+    rating: 5
+  },
+  {
+    quote: "Their expertise and attention to detail made all the difference in my landscaping project.",
+    name: "Jasper Woods",
+    affiliation: "Landscape Architect",
+    rating: 5
+  },
+  {
+    quote: "The team's knowledge and passion for plants is truly remarkable. Highly recommended!",
+    name: "Flora Martinez",
+    affiliation: "Garden Enthusiast",
+    rating: 5
+  },
+  {
+    quote: "Found rare plants I couldn't get anywhere else. Their collection is outstanding!",
+    name: "Sage Anderson",
+    affiliation: "Plant Collector",
+    rating: 5
+  },
+  {
+    quote: "The gardening workshops they offer have transformed my plant care skills completely.",
+    name: "Ivy Thompson",
+    affiliation: "Home Horticulturist",
+    rating: 5
+  },
+  {
+    quote: "Best nursery in the area! Their plant health guarantee gives me confidence in every purchase.",
+    name: "Hazel Brooks",
+    affiliation: "Garden Club President",
+    rating: 5
+  }
+]
+
 export default function Home() {
-  const [mounted, setMounted] = useState(false)
   const [isPlaying, setIsPlaying] = useState(false)
-  const [activeSlide, setActiveSlide] = useState(0)
+  const [isLoading, setIsLoading] = useState(false)
+  const videoRef = useRef<HTMLVideoElement>(null)
   const testimonialCarouselRef = useRef<HTMLDivElement>(null)
+  const [activeSlide, setActiveSlide] = useState(0)
+  
+  const handlePlay = () => {
+    setIsLoading(true)
+    setIsPlaying(true)
+  }
 
-  useEffect(() => {
-    setMounted(true)
-  }, [])
+  const handleVideoLoad = () => {
+    setIsLoading(false)
+  }
 
-  if (!mounted) {
-    return null
+  const handleVideoError = () => {
+    setIsLoading(false)
+    setIsPlaying(false)
+    console.error('Video failed to load')
+  }
+
+  const scrollToSlide = (direction: 'prev' | 'next') => {
+    if (testimonialCarouselRef.current) {
+      const carousel = testimonialCarouselRef.current
+      const cardWidth = carousel.querySelector('.testimonial-card')?.clientWidth || 0
+      const scrollAmount = cardWidth + 20 // card width + gap
+
+      if (direction === 'prev') {
+        carousel.scrollBy({ left: -scrollAmount, behavior: 'smooth' })
+        setActiveSlide(prev => Math.max(0, prev - 1))
+      } else {
+        carousel.scrollBy({ left: scrollAmount, behavior: 'smooth' })
+        setActiveSlide(prev => Math.min(testimonials.length - 1, prev + 1))
+      }
+    }
+  }
+
+  const scrollToIndex = (index: number) => {
+    if (testimonialCarouselRef.current) {
+      const carousel = testimonialCarouselRef.current
+      const cardWidth = carousel.querySelector('.testimonial-card')?.clientWidth || 0
+      const scrollAmount = (cardWidth + 20) * index // card width + gap
+      
+      carousel.scrollTo({ left: scrollAmount, behavior: 'smooth' })
+      setActiveSlide(index)
+    }
   }
 
   return (
@@ -74,7 +148,7 @@ export default function Home() {
           <div className="hero-content">
             <div className="hero-text">
               <h1>Nurture Your Garden&apos;s Foundation</h1>
-              <p>Our premium potting soil blend provides the perfect balance of nutrients, drainage, and organic matter for thriving plants.</p>
+              <p>Our premium potting soil blend provides the perfect balance of nutrients, drainage, and organic matter for thriving plants. Crafted with care for both indoor and outdoor gardening.</p>
               <div className="hero-features">
                 <div className="feature">
                   <span className="feature-highlight">✦</span> Professional Grade Mix
@@ -96,15 +170,18 @@ export default function Home() {
               </div>
             </div>
             <div className="hero-image">
-              <img
+              <Image
                 src="/PottingSoil.png"
                 alt="Premium Potting Soil with Garden Tool"
-                className="soil-image"
+                width={600}
+                height={400}
+                priority
                 style={{
                   width: '100%',
                   height: '100%',
                   objectFit: 'cover',
                 }}
+                className="soil-image"
               />
             </div>
           </div>
@@ -161,12 +238,12 @@ export default function Home() {
                   className="plant-icon-wrapper"
                 >
                   <div className="plant-icon">
-                    <img
+                    <Image
                       src={plant.imageUrl}
                       alt={plant.name}
-                      className="plant-image"
                       width={80}
                       height={80}
+                      className="plant-image"
                     />
                   </div>
                   <span className="plant-name">{plant.name}</span>
@@ -187,35 +264,29 @@ export default function Home() {
               {!isPlaying ? (
                 <div 
                   className="video-placeholder"
-                  onClick={() => setIsPlaying(true)}
-                  style={{
-                    background: 'linear-gradient(45deg, #2c5530, #1a2e22)',
-                    borderRadius: '20px',
-                    cursor: 'pointer',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    minHeight: '500px'
-                  }}
+                  onClick={handlePlay}
                 >
                   <button className="play-button">
                     <FaPlay className="play-icon" />
                   </button>
                 </div>
               ) : (
-                <div className="video-wrapper" style={{ minHeight: '500px' }}>
+                <div className="video-wrapper">
+                  {isLoading && (
+                    <div className="video-loading">
+                      <div className="loading-spinner"></div>
+                      <span>Loading video...</span>
+                    </div>
+                  )}
                   <video
+                    ref={videoRef}
                     controls
                     autoPlay
                     playsInline
-                    width="100%"
-                    height="100%"
-                    style={{
-                      width: '100%',
-                      height: '100%',
-                      borderRadius: '20px',
-                      backgroundColor: '#000'
-                    }}
+                    className="video-player"
+                    onEnded={() => setIsPlaying(false)}
+                    onLoadedData={handleVideoLoad}
+                    onError={handleVideoError}
                   >
                     <source src="/bloomhomevideo.mp4" type="video/mp4" />
                     Your browser does not support the video tag.
@@ -223,6 +294,86 @@ export default function Home() {
                 </div>
               )}
             </div>
+          </div>
+        </section>
+
+        <section className="testimonials-section">
+          <div className="section-content">
+            <div className="section-header">
+              <span className="section-title">Testimonials</span>
+              <h2 className="section-heading">What&apos;s our customer says?</h2>
+            </div>
+            
+            <div className="testimonials-container">
+              <button 
+                className="carousel-button prev"
+                onClick={() => scrollToSlide('prev')}
+                disabled={activeSlide === 0}
+              >
+                <FaChevronLeft />
+              </button>
+              
+              <div 
+                className="testimonials-carousel"
+                ref={testimonialCarouselRef}
+              >
+                {testimonials.map((testimonial, index) => (
+                  <TestimonialCard
+                    key={index}
+                    {...testimonial}
+                  />
+                ))}
+              </div>
+
+              <button 
+                className="carousel-button next"
+                onClick={() => scrollToSlide('next')}
+                disabled={activeSlide === testimonials.length - 1}
+              >
+                <FaChevronRight />
+              </button>
+            </div>
+
+            <div className="carousel-dots">
+              {testimonials.map((_, index) => (
+                <button
+                  key={index}
+                  className={`dot ${index === activeSlide ? 'active' : ''}`}
+                  aria-label={`Go to slide ${index + 1}`}
+                  onClick={() => scrollToIndex(index)}
+                />
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="newsletter-section">
+          <div className="section-content">
+            <div className="section-header">
+              <span className="section-title">Get In Touch</span>
+              <h2 className="section-heading">Join Our Newsletter</h2>
+              <p className="section-description">
+                Subscribe to receive gardening tips, exclusive offers, and updates on new plants.
+              </p>
+            </div>
+            
+            <form className="newsletter-form" onSubmit={(e) => {
+              e.preventDefault()
+              // Add your newsletter subscription logic here
+            }}>
+              <div className="input-wrapper">
+                <input
+                  type="email"
+                  placeholder="Your email"
+                  aria-label="Email address"
+                  className="email-input"
+                  required
+                />
+              </div>
+              <button type="submit" className="subscribe-button">
+                Subscribe
+              </button>
+            </form>
           </div>
         </section>
       </main>

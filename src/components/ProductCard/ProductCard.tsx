@@ -18,7 +18,6 @@ const ProductCard = ({ name, price, description, imageUrl }: ProductCardProps) =
           width={300}
           height={300}
           className="card-image"
-          unoptimized
         />
       </div>
       <div className="product-info">

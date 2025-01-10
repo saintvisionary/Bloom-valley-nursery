@@ -12,11 +12,14 @@ export default function PlantSwapPage() {
       <div className="event-header">
         <div className="header-image">
           <Image
-            src="/community/Plant Swap event.png"
+            src="/community/plant-swap-event.png"
             alt="Plant Swap"
             fill
             style={{ objectFit: 'cover' }}
             priority
+            sizes="100vw"
+            quality={75}
+            loading="eager"
           />
           <div className="image-overlay" />
         </div>

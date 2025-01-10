@@ -4,10 +4,42 @@ import { FaShoppingCart } from 'react-icons/fa'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useProducts } from '@/contexts/ProductContext'
+import { useEffect, useRef, useState } from 'react'
+import { usePathname } from 'next/navigation'
 import './styles.css'
 
 const AllProducts = () => {
+  const pathname = usePathname()
   const { filteredProducts } = useProducts()
+  const gridRef = useRef<HTMLDivElement>(null)
+  const [isInitialized, setIsInitialized] = useState(false)
+
+  // Initialize component
+  useEffect(() => {
+    setIsInitialized(true)
+    return () => setIsInitialized(false)
+  }, [])
+
+  // Handle layout initialization and route changes
+  useEffect(() => {
+    if (!isInitialized) return
+
+    // Reset scroll position
+    window.scrollTo(0, 0)
+    
+    // Force layout recalculation
+    const timer = setTimeout(() => {
+      if (gridRef.current) {
+        window.dispatchEvent(new Event('resize'))
+      }
+    }, 100)
+
+    return () => clearTimeout(timer)
+  }, [pathname, isInitialized])
+
+  if (!isInitialized) {
+    return null
+  }
 
   if (filteredProducts.length === 0) {
     return (
@@ -27,7 +59,7 @@ const AllProducts = () => {
     <section className="all-products-section">
       <div className="section-content">
         <h2 className="section-heading">All Products</h2>
-        <div className="products-grid">
+        <div className="products-grid" ref={gridRef}>
           {filteredProducts.map((product) => (
             <Link 
               key={product.id} 

@@ -1,6 +1,7 @@
 'use client'
 
-import { createContext, useContext, useState, useEffect, ReactNode } from 'react'
+import { createContext, useContext, useState, useEffect, ReactNode, useCallback } from 'react'
+import { usePathname } from 'next/navigation'
 import { FilterState } from '@/components/Products/ProductHeader'
 
 interface Product {
@@ -21,6 +22,7 @@ interface ProductContextType {
   handleFilter: (filters: FilterState) => void;
   searchQuery: string;
   setSearchQuery: (query: string) => void;
+  resetFiltersAndSearch: () => void;
 }
 
 const ProductContext = createContext<ProductContextType | undefined>(undefined)
@@ -83,6 +85,7 @@ const initialProducts: Product[] = [
 ]
 
 export function ProductProvider({ children }: { children: ReactNode }) {
+  const pathname = usePathname()
   const [products] = useState<Product[]>(initialProducts)
   const [filteredProducts, setFilteredProducts] = useState<Product[]>(initialProducts)
   const [searchQuery, setSearchQuery] = useState('')
@@ -92,6 +95,22 @@ export function ProductProvider({ children }: { children: ReactNode }) {
     priceRange: '',
     ratings: []
   })
+
+  const resetFiltersAndSearch = useCallback(() => {
+    setFilteredProducts(products)
+    setSearchQuery('')
+    setSearchSuggestions([])
+    setActiveFilters({
+      categories: [],
+      priceRange: '',
+      ratings: []
+    })
+  }, [products])
+
+  // Reset state on mount and route change
+  useEffect(() => {
+    resetFiltersAndSearch()
+  }, [pathname, resetFiltersAndSearch])
 
   const handleSearch = (query: string) => {
     setSearchQuery(query)
@@ -176,7 +195,8 @@ export function ProductProvider({ children }: { children: ReactNode }) {
         handleSearch,
         handleFilter,
         searchQuery,
-        setSearchQuery
+        setSearchQuery,
+        resetFiltersAndSearch
       }}
     >
       {children}

@@ -1,13 +1,15 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'standalone',
   images: {
     unoptimized: true,
-    domains: ['localhost', 'bloom-valley-nursery.vercel.app'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '**',
+      },
+    ],
   },
-  experimental: {
-    serverActions: true,
-  },
+  output: 'standalone',
 }
 
 module.exports = nextConfig 

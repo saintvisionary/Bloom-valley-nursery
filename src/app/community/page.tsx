@@ -53,11 +53,12 @@ export default function CommunityPage() {
             <Link href="/community/garden-workshop" className="highlight-card">
               <div className="highlight-image">
                 <Image 
-                  src="/community/Garden Workshop.png"
+                  src="/community/garden-workshop.png"
                   alt="Garden Workshop"
                   width={600}
                   height={400}
                   style={{ objectFit: 'cover' }}
+                  priority
                 />
               </div>
               <div className="highlight-content">
@@ -69,11 +70,12 @@ export default function CommunityPage() {
             <Link href="/community/plant-swap" className="highlight-card">
               <div className="highlight-image">
                 <Image 
-                  src="/community/Plant Swap event.png"
+                  src="/community/plant-swap-event.png"
                   alt="Plant Swap Event"
                   width={600}
                   height={400}
                   style={{ objectFit: 'cover' }}
+                  priority
                 />
               </div>
               <div className="highlight-content">

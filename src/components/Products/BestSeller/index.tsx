@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useState } from 'react'
+import { useRef, useState, useEffect, useCallback } from 'react'
 import { FaChevronLeft, FaChevronRight, FaShoppingCart } from 'react-icons/fa'
 import Link from 'next/link'
 import './styles.css'
@@ -65,26 +65,81 @@ const bestSellers = [
 
 const BestSeller = () => {
   const scrollContainerRef = useRef<HTMLDivElement>(null)
-  const [activeSlide, setActiveSlide] = useState(0)
+  const [canScrollLeft, setCanScrollLeft] = useState(false)
+  const [canScrollRight, setCanScrollRight] = useState(true)
+  const [isHovered, setIsHovered] = useState(false)
+  const autoScrollInterval = useRef<NodeJS.Timeout | null>(null)
 
-  const scroll = (direction: 'left' | 'right') => {
-    if (scrollContainerRef.current) {
-      const scrollAmount = 300
-      const newScrollPosition = scrollContainerRef.current.scrollLeft + 
-        (direction === 'left' ? -scrollAmount : scrollAmount)
-      
-      scrollContainerRef.current.scrollTo({
-        left: newScrollPosition,
-        behavior: 'smooth'
-      })
-
-      // Update active slide
-      const newSlide = direction === 'left' 
-        ? Math.max(0, activeSlide - 1)
-        : Math.min(bestSellers.length - 1, activeSlide + 1)
-      setActiveSlide(newSlide)
-    }
+  const checkScroll = () => {
+    if (!scrollContainerRef.current) return
+    const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current
+    setCanScrollLeft(scrollLeft > 0)
+    setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 1)
   }
+
+  const scroll = useCallback((direction: 'left' | 'right') => {
+    if (!scrollContainerRef.current) return
+    const container = scrollContainerRef.current
+    const cardWidth = container.querySelector('.product-card')?.clientWidth || 0
+    const gap = 20
+    const scrollAmount = cardWidth + gap
+    
+    const newScrollPosition = container.scrollLeft + 
+      (direction === 'left' ? -scrollAmount : scrollAmount)
+    
+    container.scrollTo({
+      left: newScrollPosition,
+      behavior: 'smooth'
+    })
+
+    setTimeout(checkScroll, 300)
+  }, [])
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (scrollContainerRef.current) {
+        scrollContainerRef.current.scrollLeft = 0
+        checkScroll()
+      }
+    }
+
+    window.addEventListener('resize', handleResize)
+    handleResize()
+
+    return () => {
+      window.removeEventListener('resize', handleResize)
+    }
+  }, [])
+
+  useEffect(() => {
+    if (autoScrollInterval.current) {
+      clearInterval(autoScrollInterval.current)
+      autoScrollInterval.current = null
+    }
+
+    if (!isHovered && scrollContainerRef.current) {
+      autoScrollInterval.current = setInterval(() => {
+        const container = scrollContainerRef.current
+        if (container) {
+          const { scrollLeft, scrollWidth, clientWidth } = container
+          const isAtEnd = scrollLeft >= scrollWidth - clientWidth - 1
+          
+          if (isAtEnd) {
+            container.scrollTo({ left: 0, behavior: 'smooth' })
+          } else {
+            scroll('right')
+          }
+        }
+      }, 5000)
+    }
+
+    return () => {
+      if (autoScrollInterval.current) {
+        clearInterval(autoScrollInterval.current)
+        autoScrollInterval.current = null
+      }
+    }
+  }, [isHovered, scroll])
 
   return (
     <section className="best-seller-section">
@@ -93,14 +148,22 @@ const BestSeller = () => {
         
         <div className="product-grid-container">
           <button 
-            className="scroll-button left"
+            className={`scroll-button left ${!canScrollLeft ? 'disabled' : ''}`}
             onClick={() => scroll('left')}
-            disabled={activeSlide === 0}
+            disabled={!canScrollLeft}
+            aria-label="Scroll left"
+            type="button"
           >
             <FaChevronLeft />
           </button>
 
-          <div className="product-grid" ref={scrollContainerRef}>
+          <div 
+            className="product-grid" 
+            ref={scrollContainerRef}
+            onScroll={checkScroll}
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+          >
             {bestSellers.map((product) => (
               <Link 
                 key={product.id} 
@@ -111,8 +174,9 @@ const BestSeller = () => {
                   <Image 
                     src={product.imageUrl}
                     alt={product.name}
-                    width={280}
-                    height={280}
+                    fill
+                    sizes="(max-width: 768px) 240px, 280px"
+                    priority={product.id <= 4}
                     style={{ objectFit: 'cover' }}
                   />
                   <div className="sold-count">
@@ -121,7 +185,7 @@ const BestSeller = () => {
                 </div>
                 <div className="product-info">
                   <h3>{product.name}</h3>
-                  <p className="price">${product.price}</p>
+                  <p className="price">${product.price.toFixed(2)}</p>
                   <div className="rating">
                     <div className="stars">
                       {[...Array(5)].map((_, i) => (
@@ -136,7 +200,15 @@ const BestSeller = () => {
                     <span className="review-count">({product.reviews})</span>
                   </div>
                 </div>
-                <button className="cart-button" onClick={(e) => e.preventDefault()}>
+                <button 
+                  className="cart-button"
+                  onClick={(e) => {
+                    e.preventDefault()
+                    // Add to cart functionality
+                  }}
+                  aria-label="Add to cart"
+                  type="button"
+                >
                   <FaShoppingCart />
                 </button>
               </Link>
@@ -144,33 +216,14 @@ const BestSeller = () => {
           </div>
 
           <button 
-            className="scroll-button right"
+            className={`scroll-button right ${!canScrollRight ? 'disabled' : ''}`}
             onClick={() => scroll('right')}
-            disabled={activeSlide === bestSellers.length - 1}
+            disabled={!canScrollRight}
+            aria-label="Scroll right"
+            type="button"
           >
             <FaChevronRight />
           </button>
-        </div>
-
-        <div className="carousel-dots">
-          {bestSellers.map((_, index) => (
-            <button
-              key={index}
-              className={`dot ${index === activeSlide ? 'active' : ''}`}
-              aria-label={`Go to slide ${index + 1}`}
-              onClick={() => {
-                if (scrollContainerRef.current) {
-                  const cardWidth = scrollContainerRef.current.querySelector('.product-card')?.clientWidth || 0
-                  const scrollAmount = (cardWidth + 20) * index
-                  scrollContainerRef.current.scrollTo({
-                    left: scrollAmount,
-                    behavior: 'smooth'
-                  })
-                  setActiveSlide(index)
-                }
-              }}
-            />
-          ))}
         </div>
       </div>
     </section>
