@@ -18,8 +18,7 @@ const ProductCard = ({ name, price, description, imageUrl }: ProductCardProps) =
           width={300}
           height={300}
           className="card-image"
-          loading="lazy"
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          unoptimized
         />
       </div>
       <div className="product-info">
