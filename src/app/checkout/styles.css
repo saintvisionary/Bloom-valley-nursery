@@ -1,0 +1,191 @@
+.checkout-page {
+  min-height: 100vh;
+  padding: 40px 20px;
+  background-color: #f9fafb;
+}
+
+.checkout-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  background: white;
+  padding: 40px;
+  border-radius: 16px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.order-summary,
+.payment-section {
+  padding: 20px;
+}
+
+.order-summary h2,
+.payment-section h2 {
+  font-size: 1.5rem;
+  color: #1a2e22;
+  margin-bottom: 24px;
+}
+
+.cart-items {
+  margin-bottom: 32px;
+}
+
+.cart-item {
+  display: flex;
+  gap: 16px;
+  padding: 16px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.cart-item:last-child {
+  border-bottom: none;
+}
+
+.cart-item img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.item-details {
+  flex: 1;
+}
+
+.item-details h3 {
+  font-size: 1.1rem;
+  color: #1a2e22;
+  margin-bottom: 4px;
+}
+
+.quantity {
+  color: #6b7280;
+  font-size: 0.95rem;
+  margin-bottom: 4px;
+}
+
+.price {
+  font-weight: 600;
+  color: #2c5530;
+}
+
+.price-breakdown {
+  background: #f8fafc;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.price-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  color: #4b5563;
+}
+
+.price-row.total {
+  border-top: 2px solid #e5e7eb;
+  margin-top: 8px;
+  padding-top: 16px;
+  font-weight: 600;
+  color: #1a2e22;
+  font-size: 1.1rem;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  color: #4b5563;
+  font-size: 0.95rem;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #2c5530;
+  box-shadow: 0 0 0 2px rgba(44, 85, 48, 0.1);
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.confirm-button {
+  width: 100%;
+  padding: 16px;
+  background: #1a2e22;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.confirm-button:hover:not(:disabled) {
+  background: #2c5530;
+  transform: translateY(-2px);
+}
+
+.confirm-button:disabled {
+  background: #9ca3af;
+  cursor: not-allowed;
+}
+
+.confirm-button.loading {
+  position: relative;
+  color: transparent;
+}
+
+.confirm-button.loading::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  margin: -10px 0 0 -10px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 768px) {
+  .checkout-content {
+    grid-template-columns: 1fr;
+    padding: 20px;
+  }
+
+  .order-summary,
+  .payment-section {
+    padding: 16px;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+} 

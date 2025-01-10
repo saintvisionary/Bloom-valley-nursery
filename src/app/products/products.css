@@ -1,0 +1,11 @@
+.products-page {
+  min-height: 100vh;
+  background: #fff;
+  padding-top: 140px; /* Increase padding to account for both Navbar and ProductHeader */
+}
+
+@media (max-width: 768px) {
+  .products-page {
+    padding-bottom: 60px;
+  }
+} 

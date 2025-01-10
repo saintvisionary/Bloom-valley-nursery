@@ -1,0 +1,338 @@
+.contact-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+/* Make footer span full width */
+.contact-page > footer {
+  width: 100vw;
+  margin-left: 50%;
+  transform: translateX(-50%);
+  position: relative;
+}
+
+.contact-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  margin-bottom: 4rem;
+}
+
+.contact-form-section h1 {
+  font-size: 2.5rem;
+  color: #2c3e50;
+  margin-bottom: 1rem;
+}
+
+.subtitle {
+  font-size: 1.1rem;
+  color: #64748b;
+  margin-bottom: 2rem;
+  line-height: 1.6;
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-group label {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #334155;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  padding: 0.75rem 1rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  color: #334155;
+  transition: all 0.2s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: #2c5530;
+  box-shadow: 0 0 0 3px rgba(44, 85, 48, 0.1);
+}
+
+.form-group input.error,
+.form-group select.error {
+  border-color: #ef4444;
+}
+
+.error-message {
+  color: #ef4444;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.submit-button {
+  background: #2c5530;
+  color: white;
+  padding: 1rem;
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  margin-top: 1rem;
+}
+
+.submit-button:hover {
+  background: #234226;
+}
+
+.submit-button:disabled {
+  background: #94a3b8;
+  cursor: not-allowed;
+}
+
+.success-message {
+  background: #dcfce7;
+  color: #166534;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.map-section {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.map-container {
+  background: #f0f4f8;
+  border-radius: 1rem;
+  height: 350px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+/* Base map grid */
+.map-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    linear-gradient(90deg, transparent 98%, rgba(44, 85, 48, 0.1) 98%),
+    linear-gradient(transparent 98%, rgba(44, 85, 48, 0.1) 98%);
+  background-size: 40px 40px;
+  opacity: 0.4;
+}
+
+/* Map patterns and points of interest */
+.map-container::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    /* Parks and green areas */
+    radial-gradient(circle at 20% 30%, #2c5530 0%, #2c5530 15px, transparent 15px) 0 0 / 200px 200px,
+    radial-gradient(circle at 80% 70%, #2c5530 0%, #2c5530 20px, transparent 20px) 0 0 / 240px 240px,
+    /* Buildings */
+    repeating-linear-gradient(45deg, rgba(44, 85, 48, 0.05) 0px, rgba(44, 85, 48, 0.05) 2px, transparent 2px, transparent 4px) 0 0 / 60px 60px;
+  opacity: 0.15;
+}
+
+/* Main roads */
+.map-roads {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    /* Horizontal main road */
+    linear-gradient(90deg, 
+      transparent 45%, 
+      rgba(44, 85, 48, 0.1) 45%, 
+      rgba(44, 85, 48, 0.2) 46%,
+      rgba(44, 85, 48, 0.2) 54%, 
+      rgba(44, 85, 48, 0.1) 55%, 
+      transparent 55%
+    ) 50% 50% / 400px 100%,
+    /* Vertical main road */
+    linear-gradient(0deg, 
+      transparent 45%, 
+      rgba(44, 85, 48, 0.1) 45%, 
+      rgba(44, 85, 48, 0.2) 46%,
+      rgba(44, 85, 48, 0.2) 54%, 
+      rgba(44, 85, 48, 0.1) 55%, 
+      transparent 55%
+    ) 50% 50% / 100% 400px;
+  opacity: 0.8;
+}
+
+/* Secondary roads */
+.map-roads::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    /* Horizontal secondary roads */
+    linear-gradient(90deg,
+      transparent 48%,
+      rgba(44, 85, 48, 0.1) 48%,
+      rgba(44, 85, 48, 0.1) 52%,
+      transparent 52%
+    ) 50% 30% / 300px 100%,
+    /* Vertical secondary roads */
+    linear-gradient(0deg,
+      transparent 48%,
+      rgba(44, 85, 48, 0.1) 48%,
+      rgba(44, 85, 48, 0.1) 52%,
+      transparent 52%
+    ) 70% 50% / 100% 300px;
+  opacity: 0.6;
+}
+
+/* Map marker and pulse effect */
+.map-marker {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #2c5530;
+  font-size: 2.5rem;
+  filter: drop-shadow(0 4px 3px rgb(0 0 0 / 0.15));
+  z-index: 2;
+  animation: markerBounce 3s ease-in-out infinite;
+}
+
+@keyframes markerBounce {
+  0%, 100% {
+    transform: translate(-50%, -50%);
+  }
+  50% {
+    transform: translate(-50%, -65%);
+  }
+}
+
+.map-marker::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 60px;
+  height: 60px;
+  background: #2c5530;
+  border-radius: 50%;
+  opacity: 0.08;
+  animation: pulse 3s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: translate(-50%, -50%) scale(0.5);
+    opacity: 0.12;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(2);
+    opacity: 0.04;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(0.5);
+    opacity: 0.12;
+  }
+}
+
+/* Location info card */
+.location-info {
+  background: white;
+  padding: 2rem;
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(44, 85, 48, 0.1);
+}
+
+.location-info h3 {
+  color: #2c5530;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.location-info h4 {
+  color: #334155;
+  font-size: 1.1rem;
+  margin: 1.5rem 0 0.75rem;
+  font-weight: 600;
+}
+
+.location-info p {
+  color: #64748b;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+@media (max-width: 1024px) {
+  .contact-content {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+
+  .map-container {
+    height: 300px;
+  }
+}
+
+@media (max-width: 640px) {
+  .contact-page {
+    padding: 1rem;
+  }
+
+  .map-section {
+    gap: 1.5rem;
+  }
+
+  .map-container {
+    height: 250px;
+  }
+
+  .location-info {
+    padding: 1.5rem;
+  }
+
+  .location-info h3 {
+    font-size: 1.25rem;
+  }
+
+  .location-info h4 {
+    font-size: 1rem;
+    margin: 1.25rem 0 0.5rem;
+  }
+} 

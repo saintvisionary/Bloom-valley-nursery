@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="140" height="42" viewBox="0 0 140 42">
+  <defs>
+    <linearGradient id="playStoreGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00c4cc"/>
+      <stop offset="100%" style="stop-color:#0086c9"/>
+    </linearGradient>
+  </defs>
+  <rect width="140" height="42" rx="8" fill="black"/>
+  <g fill="#fff">
+    <path d="M39.3 20.5L25.7 13c-.7-.4-1.6-.4-2.3 0L10 20.5c-.7.4-1.2 1.2-1.2 2s.5 1.6 1.2 2l13.4 7.5c.7.4 1.6.4 2.3 0l13.4-7.5c.7-.4 1.2-1.2 1.2-2s-.5-1.6-1.2-2zm-15.8 9.1L10 22.5l13.5-7.6 13.5 7.6-13.5 7.1z"/>
+    <text x="70" y="28" font-family="system-ui,-apple-system" font-size="14" font-weight="600">Google Play</text>
+    <text x="70" y="12" font-family="system-ui,-apple-system" font-size="10">GET IT ON</text>
+  </g>
+</svg> 

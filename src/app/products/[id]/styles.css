@@ -1,0 +1,108 @@
+@import '../../../styles/tokens.css';
+
+.product-detail-page {
+  min-height: 100vh;
+  background: white;
+  padding-top: 80px;
+}
+
+.product-detail-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.product-main {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  margin-bottom: 60px;
+}
+
+.product-image {
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  height: 600px;
+  max-height: 600px;
+  border: 1px solid var(--color-rivulet-beige);
+}
+
+.product-image img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  position: absolute !important;
+  top: 0;
+  left: 0;
+}
+
+.product-info h1 {
+  font-family: var(--font-primary);
+  font-size: var(--font-size-4xl);
+  color: var(--color-font);
+  margin-bottom: var(--spacing-md);
+  font-weight: var(--font-weight-bold);
+}
+
+.price {
+  font-family: var(--font-primary);
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-berry-blossom);
+  margin-bottom: var(--spacing-lg);
+}
+
+.meta-info {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-lg);
+}
+
+.rating {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.stars {
+  color: var(--color-autumn-leaf);
+  font-size: var(--font-size-lg);
+}
+
+.rating-count {
+  color: var(--color-font);
+  font-family: var(--font-secondary);
+  font-size: var(--font-size-base);
+  opacity: 0.7;
+}
+
+.favorite-button {
+  background: none;
+  border: none;
+  color: var(--color-berry-blossom);
+  cursor: pointer;
+  font-size: var(--font-size-xl);
+  padding: var(--spacing-sm);
+  transition: transform 0.2s ease;
+}
+
+.favorite-button:hover {
+  color: var(--color-autumn-leaf);
+  transform: scale(1.1);
+}
+
+@media (max-width: 1024px) {
+  .product-main {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+}
+
+@media (max-width: 768px) {
+  .product-detail-page {
+    padding-top: 100px;
+  }
+} 

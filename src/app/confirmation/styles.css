@@ -1,0 +1,148 @@
+.confirmation-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  background-color: #f9fafb;
+}
+
+.confirmation-content {
+  max-width: 600px;
+  width: 100%;
+  background: white;
+  padding: 40px;
+  border-radius: 16px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.success-icon {
+  font-size: 4rem;
+  color: #22c55e;
+  margin-bottom: 24px;
+  animation: scaleIn 0.5s ease-out;
+}
+
+@keyframes scaleIn {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.confirmation-content h1 {
+  font-size: 2rem;
+  color: #1a2e22;
+  margin-bottom: 12px;
+}
+
+.order-number {
+  font-size: 1.2rem;
+  color: #6b7280;
+  margin-bottom: 24px;
+}
+
+.confirmation-message {
+  margin-bottom: 32px;
+  padding: 20px;
+  background: #f0fdf4;
+  border-radius: 8px;
+}
+
+.confirmation-message p {
+  color: #1a2e22;
+  line-height: 1.6;
+}
+
+.order-info {
+  text-align: left;
+  margin-bottom: 32px;
+  padding: 24px;
+  background: #f8fafc;
+  border-radius: 8px;
+}
+
+.order-info h2 {
+  font-size: 1.4rem;
+  color: #1a2e22;
+  margin-bottom: 12px;
+}
+
+.order-info p {
+  color: #4b5563;
+  line-height: 1.6;
+  margin-bottom: 16px;
+}
+
+.shipping-note {
+  padding-top: 16px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.shipping-note p {
+  color: #6b7280;
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+}
+
+.home-button,
+.shop-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.home-button {
+  background: #1a2e22;
+  color: white;
+}
+
+.shop-button {
+  background: #f3f4f6;
+  color: #1a2e22;
+}
+
+.home-button:hover {
+  background: #2c5530;
+  transform: translateY(-2px);
+}
+
+.shop-button:hover {
+  background: #e5e7eb;
+  transform: translateY(-2px);
+}
+
+@media (max-width: 640px) {
+  .confirmation-content {
+    padding: 24px;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+  }
+
+  .home-button,
+  .shop-button {
+    width: 100%;
+    justify-content: center;
+  }
+} 
