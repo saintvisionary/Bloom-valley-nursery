@@ -1,13 +1,16 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: 'standalone',
   images: {
+    domains: ['vercel.com'],
     remotePatterns: [
       {
         protocol: 'https',
         hostname: '**',
       },
     ],
-    unoptimized: true
+    minimumCacheTTL: 60,
+    formats: ['image/webp'],
   },
 }
 
