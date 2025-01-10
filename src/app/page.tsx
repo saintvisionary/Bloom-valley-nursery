@@ -198,8 +198,10 @@ export default function Home() {
                   <video
                     controls
                     autoPlay
+                    playsInline
                     className="video-player"
                     onEnded={() => setIsPlaying(false)}
+                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                   >
                     <source src="/bloomhomevideo.mp4" type="video/mp4" />
                     Your browser does not support the video tag.
