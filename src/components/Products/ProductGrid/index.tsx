@@ -45,13 +45,16 @@ const ProductGrid = () => {
                 className="product-card"
               >
                 <div className="product-image">
-                  <Image 
+                  <img 
                     src={product.imageUrl}
                     alt={product.name}
-                    fill
-                    sizes="(max-width: 768px) 100vw, 280px"
-                    priority={product.id <= 4}
-                    style={{ objectFit: 'cover' }}
+                    width={280}
+                    height={280}
+                    style={{ 
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'cover'
+                    }}
                   />
                 </div>
                 <div className="product-info">
