@@ -54,6 +54,7 @@ const plants = [
 
 export default function Home() {
   const [mounted, setMounted] = useState(false)
+  const [isPlaying, setIsPlaying] = useState(false)
   const [activeSlide, setActiveSlide] = useState(0)
   const testimonialCarouselRef = useRef<HTMLDivElement>(null)
 
@@ -171,6 +172,40 @@ export default function Home() {
                   <span className="plant-name">{plant.name}</span>
                 </Link>
               ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="reasons-section">
+          <div className="section-content">
+            <div className="section-header">
+              <span className="section-title">The reasons</span>
+              <h2 className="section-heading">Why Choose Us?</h2>
+            </div>
+            
+            <div className="video-container">
+              {!isPlaying ? (
+                <div 
+                  className="video-placeholder"
+                  onClick={() => setIsPlaying(true)}
+                >
+                  <button className="play-button">
+                    <FaPlay className="play-icon" />
+                  </button>
+                </div>
+              ) : (
+                <div className="video-wrapper">
+                  <video
+                    controls
+                    autoPlay
+                    className="video-player"
+                    onEnded={() => setIsPlaying(false)}
+                  >
+                    <source src="/bloomhomevideo.mp4" type="video/mp4" />
+                    Your browser does not support the video tag.
+                  </video>
+                </div>
+              )}
             </div>
           </div>
         </section>
