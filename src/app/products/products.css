@@ -1,11 +1,124 @@
 .products-page {
   min-height: 100vh;
   background: #fff;
-  padding-top: 140px; /* Increase padding to account for both Navbar and ProductHeader */
+}
+
+/* Reasons Section */
+.reasons-section {
+  padding: 80px 20px;
+  background: #f8f9fa;
+}
+
+.section-content {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.section-title {
+  font-size: 1.1rem;
+  color: #2c5530;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.section-heading {
+  font-size: 2.5rem;
+  color: #1a2e22;
+  margin: 0;
+}
+
+.video-container {
+  max-width: 1000px;
+  margin: 40px auto 0;
+  padding: 20px;
+}
+
+.video-placeholder {
+  position: relative;
+  width: 100%;
+  border-radius: 20px;
+  overflow: hidden;
+  background: linear-gradient(45deg, #2c5530, #1a2e22);
+  aspect-ratio: 16/9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.video-placeholder:hover {
+  transform: scale(1.02);
+}
+
+.play-button {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.9);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.play-button:hover {
+  background: white;
+  transform: scale(1.1);
+}
+
+.play-icon {
+  font-size: 30px;
+  color: #2c5530;
+  margin-left: 5px;
+}
+
+.video-wrapper {
+  position: relative;
+  width: 100%;
+  border-radius: 20px;
+  overflow: hidden;
+  aspect-ratio: 16/9;
+}
+
+.video-player {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 20px;
 }
 
 @media (max-width: 768px) {
-  .products-page {
-    padding-bottom: 60px;
+  .reasons-section {
+    padding: 60px 20px;
+  }
+
+  .section-heading {
+    font-size: 2rem;
+  }
+
+  .video-container {
+    padding: 10px;
+  }
+
+  .play-button {
+    width: 60px;
+    height: 60px;
+  }
+
+  .play-icon {
+    font-size: 24px;
   }
 } 
