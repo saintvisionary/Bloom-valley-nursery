@@ -188,20 +188,34 @@ export default function Home() {
                 <div 
                   className="video-placeholder"
                   onClick={() => setIsPlaying(true)}
+                  style={{
+                    background: 'linear-gradient(45deg, #2c5530, #1a2e22)',
+                    borderRadius: '20px',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    minHeight: '500px'
+                  }}
                 >
                   <button className="play-button">
                     <FaPlay className="play-icon" />
                   </button>
                 </div>
               ) : (
-                <div className="video-wrapper">
+                <div className="video-wrapper" style={{ minHeight: '500px' }}>
                   <video
                     controls
                     autoPlay
                     playsInline
-                    className="video-player"
-                    onEnded={() => setIsPlaying(false)}
-                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                    width="100%"
+                    height="100%"
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      borderRadius: '20px',
+                      backgroundColor: '#000'
+                    }}
                   >
                     <source src="/bloomhomevideo.mp4" type="video/mp4" />
                     Your browser does not support the video tag.
